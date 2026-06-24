@@ -14,9 +14,6 @@
 body{font-family:'Roboto',sans-serif;background:#0f1820;color:var(--ink);-webkit-font-smoothing:antialiased;padding:30px;display:flex;justify-content:center}
 .demo-note{position:fixed;top:0;left:0;right:0;background:var(--green);color:#13260b;font-family:var(--hfont);font-weight:700;font-size:12px;text-align:center;padding:6px;letter-spacing:.04em;z-index:99}
 
-/* This is the popup — rendered inline for the demo */
-.sop-modal{width:100%;max-width:1080px;height:82vh;margin-top:30px;background:var(--navy);border:1px solid var(--navy-line);
-  border-radius:20px;overflow:hidden;display:grid;grid-template-columns:300px minmax(0,1fr);box-shadow:0 40px 120px -30px rgba(0,0,0,.8)}
 
 /* SIDEBAR */
 .sop-side{background:var(--navy-deep);border-right:1px solid var(--navy-line);display:flex;flex-direction:column;min-height:0;min-width:0;overflow:hidden}
@@ -80,7 +77,6 @@ table td:first-child b,table td:first-child{font-weight:500}
 @media(max-width:760px){.sop-modal{grid-template-columns:1fr}.sop-side{display:none}.reader{padding:30px 24px 60px}}
 </style></head>
 <body>
-<div class="demo-note">PROTOTYPE A · "FIELD MANUAL" — sidebar + reader (this is the popup; in the hub it opens over the page)</div>
 
 <div class="sop-modal">
   <aside class="sop-side">
