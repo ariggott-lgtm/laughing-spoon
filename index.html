@@ -85,6 +85,18 @@
   .B-band h2{font-family:var(--hfont);font-size:32px;font-weight:800;letter-spacing:-.01em;margin:12px 0 8px;}
   .B-band .lede{font-size:15px;color:var(--ink-soft);max-width:560px;line-height:1.6;}
 
+  /* ---------- MISSION (inline hero reveal) ---------- */
+  .hero-toggle{margin-top:16px;background:none;border:none;padding:0;cursor:pointer;color:var(--green-soft);font-family:'Roboto',sans-serif;font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;}
+  .hero-toggle:hover{color:#9bdc4f;}
+  .hero-toggle-chev{transition:transform .3s ease;font-size:16px;line-height:1;}
+  .hero-toggle.open .hero-toggle-chev{transform:rotate(90deg);}
+  .hero-mission-reveal{max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .4s ease,margin-top .4s ease;}
+  .hero-mission-reveal.open{max-height:360px;opacity:1;margin-top:20px;}
+  .hero-mission-eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-soft);font-weight:700;margin-bottom:10px;}
+  .hero-mission-text{font-family:var(--hfont);font-size:18px;line-height:1.5;font-weight:600;color:#fff;letter-spacing:-.01em;}
+  .hero-mission-text .mk{background:linear-gradient(transparent 60%,rgba(119,188,31,.45) 0);padding:0 2px;}
+  @media(max-width:640px){.hero-mission-text{font-size:16px;} .hero-mission-reveal.open{max-height:560px;}}
+
   /* ===================== ELECTIVE WEBINARS ===================== */
   .wb-filters{display:flex;flex-wrap:wrap;gap:9px;margin:26px 0 30px;align-items:center;}
   .wb-chip{font-family:var(--hfont);font-size:12.5px;font-weight:600;letter-spacing:.02em;
@@ -340,7 +352,7 @@
   .B-foot{background:var(--navy-deep);border-top:1px solid rgba(255,255,255,.07);padding:32px 0;}
   .foot-links{display:block;padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
   .foot-links .helpful-label{display:block;margin-bottom:12px;}
-  .foot-cols{display:grid;grid-template-columns:repeat(2,max-content);gap:7px 48px;}
+  .foot-cols{display:grid;grid-template-columns:repeat(3,max-content);gap:9px 40px;}
   .foot-links a{color:var(--ink-soft);text-decoration:none;font-size:12px;font-weight:500;transition:color .15s;}
   .foot-links a:hover{color:var(--green-soft);text-decoration:underline;}
   .B-foot .wrap{display:flex;align-items:center;gap:13px;}
@@ -442,6 +454,11 @@
   .okr-item .o{font-weight:700;font-size:15px;margin-bottom:4px;}
   .okr-item .kr{font-size:13px;color:var(--dark-gray);line-height:1.5;}
   .okr-soon{background:rgba(255,131,0,.12);color:#a85600;font-size:12px;font-weight:700;padding:10px 14px;border-radius:10px;margin-bottom:16px;}
+  .okr-lead{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px;}
+  .okr-obj{font-size:13px;color:var(--dark-gray);line-height:1.55;margin-bottom:11px;}
+  .okr-krlabel{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:6px;}
+  .okr-krlist{margin:0;padding-left:18px;}
+  .okr-krlist li{font-size:13px;color:var(--dark-gray);line-height:1.5;margin-bottom:4px;}
 
 
   @media(max-width:640px){
@@ -471,10 +488,15 @@
     <div class="B-glass">
       <div class="B-kicker">Learning &amp; Development</div>
       <h1 id="heroTitle">Everything the <em>Llama League</em> needs,&nbsp;one&nbsp;place.</h1>
-      <p>Built for the people who build the learning.</p>
+      <p class="hero-sub">Built for the people who build the learning.</p>
       <div class="B-cta">
         <a class="primary" href="#libraries">Browse the libraries</a>
-        <a class="ghost" href="https://conservice989398.monday.com/boards/9554096232" target="_blank" rel="noopener">Open Llamaland ↗</a>
+        <a class="ghost" href="https://conservice989398.monday.com/boards/9554096232" target="_blank" rel="noopener"><img src="icon-monday.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:8px;">Open Llamaland ↗</a>
+      </div>
+      <button class="hero-toggle" id="heroToggle" onclick="toggleHero()" aria-expanded="false"><span id="heroToggleLabel">Read our mission</span><span class="hero-toggle-chev">&rsaquo;</span></button>
+      <div class="hero-mission-reveal" id="missionReveal">
+        <div class="hero-mission-eyebrow">Our Mission</div>
+        <p class="hero-mission-text">To design and deliver world-class instructional solutions that <span class="mk">empower employees</span>, <span class="mk">enhance their skills</span>, and <span class="mk">drive performance</span>. Through collaboration with our internal business partners, we strive to provide exceptional service and develop top-tier talent that contributes to the company&rsquo;s success.</p>
       </div>
     </div>
   </div>
@@ -579,24 +601,24 @@
       </div>
       <!-- ROW 1: Engagement + Vision Vault -->
       <div class="coolgrid-row1">
-        <div class="coolcard">
+        <div class="coolcard" style="cursor:pointer;" onclick="window.open('https://docs.google.com/document/d/15KCG7B_Dp_Lg8dfgzKu8fLQ4CWD0-QekIHvzgvBClkA/edit?usp=sharing','_blank','noopener')">
           <div class="ic-block"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 8a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2l0 -8"/><path d="M6 12h4m-2 -2v4"/><path d="M15 11l0 .01"/><path d="M18 13l0 .01"/></svg></div>
-          <h3>Engagement sign-ups</h3><p>Claim your slot for the next team meeting and pick what you'll bring.</p><a href="https://docs.google.com/document/d/15KCG7B_Dp_Lg8dfgzKu8fLQ4CWD0-QekIHvzgvBClkA/edit?usp=sharing" target="_blank" rel="noopener">Sign up ↗</a>
+          <h3>Engagement sign-ups</h3><p>Sign up to lead an upcoming engagement activity and add the topic you'll cover.</p><a href="https://docs.google.com/document/d/15KCG7B_Dp_Lg8dfgzKu8fLQ4CWD0-QekIHvzgvBClkA/edit?usp=sharing" target="_blank" rel="noopener" onclick="event.stopPropagation()">Sign up ↗</a>
         </div>
-        <div class="coolcard">
+        <div class="coolcard" style="cursor:pointer;" onclick="window.open('https://sites.google.com/conservice.com/instructional-design/fun-stuff/the-vision-vault?authuser=0','_blank','noopener')">
           <div class="ic-block"><svg viewBox="0 0 24 24"><path d="M6 21l15 -15l-3 -3l-15 15l3 3"/><path d="M15 6l3 3"/><path d="M9 3a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"/><path d="M19 13a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"/></svg></div>
-          <h3>The Vision Vault</h3><p>Where the team's big ideas and inspiration live.</p><a href="https://sites.google.com/conservice.com/instructional-design/fun-stuff/the-vision-vault?authuser=0" target="_blank" rel="noopener">Open the vault ↗</a>
+          <h3>The Vision Vault</h3><p>Where the team's big ideas and inspiration live.</p><a href="https://sites.google.com/conservice.com/instructional-design/fun-stuff/the-vision-vault?authuser=0" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open the vault ↗</a>
         </div>
       </div>
       <!-- ROW 2: 3 small cards -->
       <div class="coolgrid-row2">
-        <div class="coolcard coolcard-sm">
+        <div class="coolcard coolcard-sm" style="cursor:pointer;" onclick="window.open('https://docs.google.com/document/d/1SpRMgQFWHBr_crtQxlD-pVzLLWgdYX-cDdVnHFMsxtE/edit?tab=t.0','_blank','noopener')">
           <div class="ic-block"><svg viewBox="0 0 24 24"><path d="M12 3c1.918 0 3.52 1.35 3.91 3.151a4 4 0 0 1 2.09 7.723l0 7.126h-12v-7.126a4 4 0 1 1 2.092 -7.723a4 4 0 0 1 3.908 -3.151"/><path d="M6.161 17.009l11.839 -.009"/></svg></div>
-          <h3>Content Team Cookbook</h3><p>The team's favorite recipes, collected in one place.</p><a href="https://docs.google.com/document/d/1SpRMgQFWHBr_crtQxlD-pVzLLWgdYX-cDdVnHFMsxtE/edit?tab=t.0" target="_blank" rel="noopener">Open the cookbook ↗</a>
+          <h3>Content Team Cookbook</h3><p>The team's favorite recipes, collected in one place.</p><a href="https://docs.google.com/document/d/1SpRMgQFWHBr_crtQxlD-pVzLLWgdYX-cDdVnHFMsxtE/edit?tab=t.0" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open the cookbook ↗</a>
         </div>
-        <div class="coolcard coolcard-sm">
+        <div class="coolcard coolcard-sm" style="cursor:pointer;" onclick="window.open('https://sites.google.com/conservice.com/instructional-design/fun-stuff/pet-palace?authuser=0','_blank','noopener')">
           <div class="ic-block"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.7 13.5c-1.1 -2 -1.441 -2.5 -2.7 -2.5c-1.259 0 -1.736 .755 -2.836 2.747c-.942 1.703 -2.846 1.845 -3.321 3.291c-.097 .265 -.145 .677 -.143 .962c0 1.176 .787 2 1.8 2c1.259 0 3 -1 4.5 -1s3.241 1 4.5 1c1.013 0 1.8 -.823 1.8 -2c0 -.285 -.049 -.697 -.146 -.962c-.475 -1.451 -2.512 -1.835 -3.454 -3.538"/><path d="M20.188 8.082a1.039 1.039 0 0 0 -.406 -.082h-.015c-.735 .012 -1.56 .75 -1.993 1.866c-.519 1.335 -.28 2.7 .538 3.052c.129 .055 .267 .082 .406 .082c.739 0 1.575 -.742 2.011 -1.866c.516 -1.335 .273 -2.7 -.54 -3.052l-.001 0"/><path d="M9.474 9c.055 0 .109 0 .163 -.011c.944 -.128 1.533 -1.346 1.32 -2.722c-.203 -1.297 -1.047 -2.267 -1.932 -2.267c-.055 0 -.109 0 -.163 .011c-.944 .128 -1.533 1.346 -1.32 2.722c.204 1.293 1.048 2.267 1.933 2.267"/><path d="M16.456 6.733c.214 -1.376 -.375 -2.594 -1.32 -2.722a1.164 1.164 0 0 0 -.162 -.011c-.885 0 -1.728 .97 -1.93 2.267c-.214 1.376 .375 2.594 1.32 2.722c.054 .007 .108 .011 .162 .011c.885 0 1.73 -.974 1.93 -2.267"/><path d="M5.69 12.918c.816 -.352 1.054 -1.719 .536 -3.052c-.436 -1.124 -1.271 -1.866 -2.009 -1.866c-.14 0 -.277 .027 -.407 .082c-.816 .352 -1.054 1.719 -.536 3.052c.436 1.124 1.271 1.866 2.009 1.866c.14 0 .277 -.027 .407 -.082"/></svg></div>
-          <h3>Pet Palace</h3><p>Show off your furry, feathered, and scaly coworkers.</p><a href="https://sites.google.com/conservice.com/instructional-design/fun-stuff/pet-palace?authuser=0" target="_blank" rel="noopener">Visit the palace ↗</a>
+          <h3>Pet Palace</h3><p>Show off your furry, feathered, and scaly coworkers.</p><a href="https://sites.google.com/conservice.com/instructional-design/fun-stuff/pet-palace?authuser=0" target="_blank" rel="noopener" onclick="event.stopPropagation()">Visit the palace ↗</a>
         </div>
         <div class="coolcard coolcard-sm" onclick="openModal('mHoro')" style="cursor:pointer;">
           <div class="ic-block"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"/><path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"/><path d="M19 11h2m-1 -1v2"/></svg></div>
@@ -615,6 +637,7 @@
       <a href="https://www.canva.com/" target="_blank" rel="noopener">Canva ↗</a>
       <a href="https://kb.conservice.com/" target="_blank" rel="noopener">Knowledge Base ↗</a>
       <a href="https://lms.conservice.com/pages/17/home" target="_blank" rel="noopener">LMS ↗</a>
+      <a href="https://lmssandbox.conservice.com/learn" target="_blank" rel="noopener">LMS Sandbox ↗</a>
       <a href="https://rise.articulate.com/manage/all-content" target="_blank" rel="noopener">Rise 360 ↗</a>
       <a href="https://conservice989398.monday.com/boards/9554096232" target="_blank" rel="noopener">Llamaland ↗</a>
       <a href="https://wkf.ms/4gs2guy" target="_blank" rel="noopener">Content Request Form ↗</a>
@@ -722,10 +745,45 @@
   <div class="modal">
     <div class="modal-head"><span class="mark llama-mark" id="okrLlama"></span><h3>2026 OKRs</h3><button class="x" onclick="closeModal('mOkr')">×</button></div>
     <div class="modal-body">
-      <div class="okr-soon">Coming soon — placeholder content shown for layout.</div>
-      <div class="okr-item"><div class="o">Objective 1 · Faster course turnaround</div><div class="kr">KR: cut average build time per module by 20%.</div></div>
-      <div class="okr-item"><div class="o">Objective 2 · Stronger SOP coverage</div><div class="kr">KR: document the top 15 recurring ID workflows.</div></div>
-      <div class="okr-item"><div class="o">Objective 3 · Team growth</div><div class="kr">KR: each designer ships one new template to the shared library.</div></div>
+      <p class="okr-lead">The Design team's 2026 objectives and key measurements.</p>
+      <div class="okr-item">
+        <div class="o">L&amp;D Content Organization: Design</div>
+        <p class="okr-obj">Partner with the DPL team on the L&amp;D content organization project, specifically naming conventions, content navigation UX, permissions, and backend storage, to reduce content friction, improve usability, and enable consistent training delivery at scale.</p>
+        <div class="okr-krlabel">Key Measurements</div>
+        <ul class="okr-krlist">
+          <li>UX proposal delivered for L&amp;D content organization and navigation structure</li>
+          <li>Naming convention framework designed and ready for DPL review and adoption</li>
+          <li>Permission and backend storage design recommendations submitted</li>
+          <li>Wireframes and UX flows in development to support hiring-ready training infrastructure</li>
+          <li>Design feedback loop established with DPL and Operations stakeholders</li>
+        </ul>
+      </div>
+      <div class="okr-item">
+        <div class="o">Conservice Core: Design</div>
+        <p class="okr-obj">Partner with the Training and LEAD teams to organize, update, and build a unified onboarding ecosystem spanning LMS pathways, KB, resources, and manager tools, delivering a consistent experience across all role levels.</p>
+        <div class="okr-krlabel">Key Measurements</div>
+        <ul class="okr-krlist">
+          <li>Update Day 1 &amp; Day 2 content</li>
+          <li>Full curriculum overhaul of foundations training</li>
+          <li>Curriculum improvements of professional team onboarding</li>
+          <li>Build external leadership onboarding experience</li>
+        </ul>
+      </div>
+      <div class="okr-item">
+        <div class="o">Leadership Elevated (STL): Design</div>
+        <p class="okr-obj">Partner with the LEAD team to design a comprehensive 12-month leadership development program for the STL level: building the curriculum, LMS pathway, VILT experiences, peer projects, and resources to meaningfully elevate frontline leadership skills.</p>
+        <div class="okr-krlabel">Key Measurements</div>
+        <ul class="okr-krlist">
+          <li>LMS pathway</li>
+          <li>Project set-up &amp; updates in Monday</li>
+          <li>4 VILT</li>
+          <li>3 Peer Projects</li>
+          <li>1 Development Plan</li>
+          <li>Pre &amp; post work</li>
+          <li>Resource access</li>
+          <li>Communications</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
@@ -802,6 +860,8 @@
         <div class="sw-grid" id="sw-core"></div>
         <h4 class="pal-h">Tertiary (data design)</h4>
         <div class="sw-grid" id="sw-tertiary"></div>
+        <h4 class="pal-h">Functional</h4>
+        <div class="sw-grid" id="sw-func"></div>
         <p class="pal-hint">Tap any swatch to copy. Format set above.</p>
       </div>
 
@@ -1022,7 +1082,10 @@
     {n:'Purple',hex:'#680054',rgb:'104, 0, 84',cmyk:'58, 100, 33, 28'},
     {n:'Red Orange',hex:'#FD5F46',rgb:'253, 95, 70',cmyk:'0, 78, 74, 0'}
   ];
-  var ALL=BRAND.concat(TERT);
+  var FUNC=[
+    {n:'Error Red',hex:'#D31E1E',rgb:'211, 30, 30',cmyk:'0, 86, 86, 17'}
+  ];
+  var ALL=BRAND.concat(TERT).concat(FUNC);
   var palFmt='hex';
   function valFor(c){ return palFmt==='hex'?c.hex : palFmt==='rgb'?('rgb('+c.rgb+')') : ('cmyk('+c.cmyk+')'); }
   function lum(hex){var r=parseInt(hex.substr(1,2),16)/255,g=parseInt(hex.substr(3,2),16)/255,b=parseInt(hex.substr(5,2),16)/255;
@@ -1035,6 +1098,7 @@
         '<span class="sw-name">'+c.n+'</span><span class="sw-val" data-hex="'+c.hex+'" data-rgb="'+c.rgb+'" data-cmyk="'+c.cmyk+'">'+c.hex+'</span><span class="sw-copied">Copied!</span></button>';}
     document.getElementById('sw-core').innerHTML=BRAND.map(card).join('');
     document.getElementById('sw-tertiary').innerHTML=TERT.map(card).join('');
+    document.getElementById('sw-func').innerHTML=FUNC.map(card).join('');
     refreshSwatchVals();
   }
   function refreshSwatchVals(){document.querySelectorAll('.sw-val').forEach(function(s){
@@ -1107,6 +1171,15 @@
     var chevron=document.getElementById('spotifyChevron');
     var isOpen=panel.classList.toggle('open');
     chevron.classList.toggle('open',isOpen);
+  }
+  function toggleHero(){
+    var rev=document.getElementById('missionReveal');
+    var tgl=document.getElementById('heroToggle');
+    var lbl=document.getElementById('heroToggleLabel');
+    var open=rev.classList.toggle('open');
+    tgl.classList.toggle('open',open);
+    tgl.setAttribute('aria-expanded',open);
+    lbl.textContent=open?'Hide mission':'Read our mission';
   }
   document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-scrim.open').forEach(function(m){m.classList.remove('open');});document.body.style.overflow='';}});
 
