@@ -222,6 +222,20 @@
   .wb-chevron{margin-left:auto;display:flex;align-items:center;color:var(--navy);transition:transform .3s;}
   .wb-chevron svg{width:32px;height:32px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
   .wb-chevron.open{transform:rotate(180deg);}
+  /* whole panel is clickable to expand; interactive content inside keeps normal cursor */
+  .wb-glass{cursor:pointer;}
+  .wb-collapse{cursor:default;}
+  /* "click to expand" cue pill, pushed to the right beside the caret */
+  .wb-header .wb-chevron{margin-left:0;}
+  .wb-cue{margin-left:auto;font-size:12px;font-weight:600;letter-spacing:.01em;color:var(--navy);
+    background:rgba(38,55,70,.07);border:1px solid rgba(38,55,70,.16);border-radius:999px;
+    padding:5px 13px;white-space:nowrap;opacity:.8;transition:opacity .2s;}
+  .wb-glass:hover .wb-cue{opacity:1;}
+  /* caret bobs while collapsed to signal it drops down; stops once open */
+  @keyframes wbCaretPulse{0%,100%{transform:translateY(0);opacity:.7;}50%{transform:translateY(3px);opacity:1;}}
+  .wb-chevron:not(.open){animation:wbCaretPulse 1.7s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.wb-chevron:not(.open){animation:none;}}
+  @media(max-width:640px){.wb-cue{display:none;}}
   .wb-collapse{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1);}
   .wb-collapse.open{max-height:4000px;}
   .libgrid{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
@@ -521,7 +535,7 @@
         <div class="seclabel" style="margin-bottom:16px;">The Toolkit</div>
         <h3>Calculators, estimators, and planners for instructional designers.</h3>
         <p>Replaces the manual spreadsheets and back-of-napkin math for project scoping, hour estimates, and timeline planning.</p>
-        <a href="https://jurassicsystems.com/" target="_blank" rel="noopener">Open the ID Toolkit ↗</a>
+        <a href="https://tools-n-things.github.io/id-toolkit/" target="_blank" rel="noopener">Open the ID Toolkit ↗</a>
       </div>
       <div class="tk-stat">
         <div class="tk-stat-num">6+</div>
@@ -548,10 +562,11 @@
       <div class="libcard" onclick="openModal('mPalette')"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/><path d="M8.5 10.5a1 1 0 1 0 0 -.001"/><path d="M12.5 7.5a1 1 0 1 0 0 -.001"/><path d="M16.5 10.5a1 1 0 1 0 0 -.001"/></svg></div><div class="body"><h3>Brand Palette Lab <span class="pill">popup</span></h3><p>Swatches, contrast checker, tints, gradients — copy-ready.</p></div></div>
     </div>
 
-    <div class="wb-glass" id="webinars">
+    <div class="wb-glass" id="webinars" onclick="toggleWebinars(event)">
       <div class="seclabel"><span class="mark llama-mark"></span>Elective Webinars</div>
-      <div class="wb-header" onclick="toggleWebinars()" id="wbHeader">
+      <div class="wb-header" id="wbHeader">
         <h2>Sharpen a skill, live.</h2>
+        <span class="wb-cue" id="wbCue">Click to browse sessions</span>
         <span class="wb-chevron" id="wbChevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
       </div>
       <p class="lede">A rotating selection of live sessions from across the L&amp;D world. Browse by skill and sign up for any that spark your interest or move you toward a professional or personal goal.</p>
@@ -1161,11 +1176,15 @@
   function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';
     if(id==='mHoro'){var r=document.getElementById('horoResult');if(r)r.classList.remove('show');document.querySelectorAll('#horoSigns .horo-sign').forEach(function(b){b.classList.remove('on');});var sg=document.getElementById('horoSigns');if(sg)sg.style.display='';var rv=document.getElementById('horoReveal');if(rv)rv.classList.remove('in');var cn=document.getElementById('horoConstel');if(cn)cn.classList.remove('draw');}}
   function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
-  function toggleWebinars(){
+  function toggleWebinars(e){
+    // Clicks inside the expanded content (filter chips, register links, cards) should NOT collapse the panel.
+    if(e && e.target && e.target.closest && e.target.closest('#wbCollapse')) return;
     var p=document.getElementById('wbCollapse');
     var c=document.getElementById('wbChevron');
+    var cue=document.getElementById('wbCue');
     var o=p.classList.toggle('open');
     c.classList.toggle('open',o);
+    if(cue) cue.textContent=o?'Click header to collapse':'Click to browse sessions';
   }
   function toggleSpotify(){
     var panel=document.getElementById('spotifyPanel');

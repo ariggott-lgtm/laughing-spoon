@@ -66,5 +66,54 @@ var WEBINARS=[
     dateCST:"2026-06-22T10:55", durLabel:"Half-day", endLabel:"ends 3:30 PM ET",
     skills:["ai","strategy"],
     overview:"Free half-day event with live 30-minute demos from five learning-tech vendors (SmartWinnr, Administrate, The Regis Company, Chronus, Cornerstone) — see AI-driven L&D solutions in action and compare options side by side.",
-    link:"https://webinars.td.org/demo-day-augment-ld-with-ai-june-2026" }
+    link:"https://webinars.td.org/demo-day-augment-ld-with-ai-june-2026" },
+
+  { title:"Crafting Choices That Challenge: Designing Scenarios for Authentic Practice",
+    host:"Christy Tucker · Training Magazine Network",
+    dateCST:"2026-07-15T14:00", durLabel:"1 hr",
+    skills:["strategy"],
+    overview:"Techniques for writing scenario choices and distractors that give learners authentic decision-making practice: how to find the decisions that drive performance, mine real mistakes for believable wrong answers, and write consequences that actually teach.",
+    link:"https://www.trainingmagnetwork.com/events/4499" },
+
+  { title:"Reveal, Explore, Learn: Designing Content That Unfolds with the Learner",
+    host:"Sharath Ramaswamy · Training Magazine Network",
+    dateCST:"2026-07-16T11:00", durLabel:"1 hr",
+    skills:["authoring","strategy"],
+    overview:"How progressive disclosure turns content-heavy courses into learner-driven experiences. Structure content in layers to cut cognitive overload and boost retention, with live examples built in Adobe Captivate.",
+    link:"https://www.trainingmagnetwork.com/events/4519" },
+
+  { title:"Branching Scenarios Made Easy: A Beginner's Guide to Adaptive Design",
+    host:"Garima Gupta · Training Magazine Network",
+    dateCST:"2026-08-04T11:00", durLabel:"1 hr",
+    skills:["ai","strategy"],
+    overview:"Build branching scenarios without coding or heavy writing. Use ChatGPT to rapidly prototype realistic dialogue, tough choices, and meaningful consequences, plus a beginner-friendly framework for adaptive decision trees.",
+    link:"https://www.trainingmagnetwork.com/events/4370" },
+
+  { title:"Make Blended Learning Stickier with Science",
+    host:"Karen Hyder & Melissa Chambers · Training Magazine Network",
+    dateCST:"2026-08-11T14:00", durLabel:"1 hr",
+    skills:["strategy"],
+    overview:"Learning science and insights from the Training Conference Virtual Engagement Lab, applied to blended learning that stays engaging and drives retention even when the ask is faster, shorter, and more scalable.",
+    link:"https://www.trainingmagnetwork.com/events/4494" },
+
+  { title:"Rules of Engagement for Highly Engaging Virtual Learning",
+    host:"Rick Altman · Training Magazine Network",
+    dateCST:"2026-08-13T11:00", durLabel:"1 hr",
+    skills:["strategy"],
+    overview:"Broadcasting techniques mixed with fresh tactics for connecting with learners you cannot see over Zoom, Teams, and Connect, turning the limits of virtual delivery into an advantage that makes audiences sit up.",
+    link:"https://www.trainingmagnetwork.com/events/4520" },
+
+  { title:"Story-based Technical Training: A How-To Session",
+    host:"Rance Greene · Training Magazine Network",
+    dateCST:"2026-08-19T11:00", durLabel:"1 hr",
+    skills:["strategy"],
+    overview:"Even software, machine, and safety training can be story-driven. Practical steps from the Instructional Story Design method for turning dry technical content into humanized, performance-focused learning.",
+    link:"https://www.trainingmagnetwork.com/events/4361" },
+
+  { title:"Rise on Steroids: Elevating Your Course Functionality with Simple Custom Blocks",
+    host:"Garima Gupta · Training Magazine Network",
+    dateCST:"2026-09-10T11:00", durLabel:"1 hr",
+    skills:["ai","authoring"],
+    overview:"Push past Rise's standard block library with AI-generated custom blocks. Vibe-code functional HTML, CSS, and JS from plain descriptions and wire in AI APIs for dynamic interactions like instant-feedback generators, no JavaScript expertise required.",
+    link:"https://www.trainingmagnetwork.com/events/4371" }
 ];
